@@ -25,7 +25,7 @@ import java.util.Map;
 public class CommentActivity extends AppCompatActivity {
     public String number;
     private List<Map<String, Object>> list = new ArrayList<>();
-    private TextView SumComment;
+    private TextView SumComment,LongCommentNumber,ShortCommentNumber;
     private Button back;
     private RecyclerView recyclerView1;
 
@@ -37,19 +37,21 @@ public class CommentActivity extends AppCompatActivity {
         recyclerView1 = findViewById(R.id.recyclerView1);
         back = findViewById(R.id.back);
         SumComment = findViewById(R.id.sum_number);
-        //LongCommentNumber = findViewById(R.id.LongCommentNumber);
+        LongCommentNumber = findViewById(R.id.LongCommentNumber);
+        ShortCommentNumber = findViewById(R.id.ShortCommentNumber);
 
 
         Intent intent3 = getIntent();
         final String id = intent3.getStringExtra("id");
         final String comments = intent3.getStringExtra("comments");
-        final int comment = Integer.valueOf(comments);
+//        final int comment = Integer.valueOf(comments);
         final String long_comments = intent3.getStringExtra("long_comments");
-        final int long_comment = Integer.valueOf(long_comments);
+//        final int long_comment = Integer.valueOf(long_comments);
         final String short_comments = intent3.getStringExtra("short_comments");
-        final int short_comment = Integer.valueOf(short_comments);
+//        final int short_comment = Integer.valueOf(short_comments);
         SumComment.setText(comments);
-        // LongCommentNumber.setText(long_comments);
+        LongCommentNumber.setText(long_comments);
+        ShortCommentNumber.setText(short_comments);
 
 
             Thread thread = new Thread(new Runnable() {
@@ -116,12 +118,12 @@ public class CommentActivity extends AppCompatActivity {
                     String content = jsonObject1.getString("content");
                     String time = jsonObject1.getString("time");
                     Map<String, Object> map = new HashMap<>();
-                    if (NUMBER1!=0) {
-                        map.put("i", i);
-                    }
-                    else{
-                        map.put("i",null);
-                    }
+//                    if (NUMBER1!=0) {
+//                        map.put("i", i);
+//                    }
+//                    else{
+//                        map.put("i",null);
+//                    }
                     map.put("author", author);
                     map.put("picture", avatar);
                     map.put("content", content);
@@ -151,7 +153,7 @@ public class CommentActivity extends AppCompatActivity {
                 JSONArray jsonArray = jsonObject.getJSONArray("comments");
                 //  final int short_comment = jsonArray.length();
                 // final String shortComment = String.valueOf(short_comment);
-                final int NUMBER2 = jsonArray.length();
+//                final int NUMBER2 = jsonArray.length();
                 for (int j = 0; j < jsonArray.length(); j++) {
                     JSONObject jsonObject1 = jsonArray.getJSONObject(j);
                     String author2 = jsonObject1.getString("author");
@@ -159,16 +161,15 @@ public class CommentActivity extends AppCompatActivity {
                     String content2 = jsonObject1.getString("content");
                     String time2 = jsonObject1.getString("time");
                     Map<String, Object> map = new HashMap<>();
-                    if (NUMBER2!=0){
-                    map.put("j", j);}
-                    else{
-                        map.put("j",null);
-                    }
+//                    if (NUMBER2!=0){
+//                    map.put("j", j);}
+//                    else{
+//                        map.put("j",null);
+//                    }
                     map.put("author", author2);
                     map.put("picture", avatar2);
                     map.put("content", content2);
                     map.put("time", time2);
-
                     list.add(map);
                 }
 

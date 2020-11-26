@@ -72,10 +72,10 @@
                  android:background="@drawable/log_in" />
          </RelativeLayout>
      </LinearLayout>
-     <ImageView
-         android:layout_width="match_parent"
-         android:layout_height="300dp"
-         android:background="@drawable/main_picture"></ImageView>
+<!--     <ImageView-->
+<!--         android:layout_width="match_parent"-->
+<!--         android:layout_height="300dp"-->
+<!--         android:background="@drawable/main_picture"></ImageView>-->
      <com.scwang.smartrefresh.layout.SmartRefreshLayout
          android:id="@+id/refreshLayout"
          android:layout_width="match_parent"

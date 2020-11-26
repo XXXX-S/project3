@@ -44,7 +44,7 @@ public class TextActivity extends AppCompatActivity {
                    intent2.putExtra("id",id);
                    intent2.putExtra("comments",comments);
                    intent2.putExtra("long_comments",long_comments);
-               //    intent2.putExtra("short_comments",short_comments);
+                   intent2.putExtra("short_comments",short_comments);
                    startActivity(intent2);
 
 

@@ -38,7 +38,7 @@
     import java.net.URL;
 
     public class MainActivity extends AppCompatActivity {
-        public int dates;
+        public int dates,Date;
         public String data_str = String.valueOf(dates);
         public int date2;
         public String data_str1;
@@ -80,6 +80,102 @@
                 @Override
                 public void onRefresh(RefreshLayout refreshlayout) {
                     refreshLayout.finishRefresh(2000);//传入false 表示刷新失败
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            HttpURLConnection connection = null;
+                            BufferedReader reader = null;
+                            try {
+                                URL url1 = new URL("https://news-at.zhihu.com/api/3/stories/latest");
+                                connection = (HttpURLConnection) url1.openConnection();
+                                connection.setRequestMethod("GET");
+                                connection.setConnectTimeout(8000);
+                                connection.setReadTimeout(8000);
+                                InputStream in = connection.getInputStream();
+                                reader = new BufferedReader(new InputStreamReader(in));
+                                StringBuilder response = new StringBuilder();
+                                String line;
+                                while ((line = reader.readLine()) != null) {
+                                    response.append(line);
+                                }
+                                showResponse(response.toString());
+                            } catch (Exception e) {
+                                e.printStackTrace();//这里记得要加上一个如果没联网的话显示的东西
+                                Toast.makeText(MainActivity.this, "您的网络崩溃了！请查看您的网络设置！", Toast.LENGTH_SHORT).show();
+                            } finally {
+                                if (reader != null) {
+                                    try {
+                                        reader.close();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                            }
+                        }
+                    });
+
+                    thread.start();
+                }
+
+                public void showResponse(final String string) {
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(string);
+                        dates= jsonObject.getInt("date");
+                        final String date=String.valueOf(dates);
+                        JSONArray jsonArray = jsonObject.getJSONArray("stories");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            final String title = jsonObject1.getString("title");
+                            final JSONArray imagesArray = jsonObject1.getJSONArray("images");
+                            String images = imagesArray.getString(0);//这一步真的非常重要
+                            final String id = jsonObject1.getString("id");
+                            final String hint = jsonObject1.getString("hint");
+                            final String url = jsonObject1.getString("url");
+                            final String year,month,day;
+                            if (i==0){
+                                year=date.substring(0,4);
+                                month=date.substring(4,6);
+                                day = date.substring(6,8);
+                            }
+                            else{
+                                year=null;
+                                month=null;
+                                day=null;
+                            }
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("year",year);
+                            map.put("month",month);
+                            map.put("day",day);
+                            map.put("i",i);
+                            map.put("title", title); //标题
+                            map.put("picture", images);  //高清大图图片
+                            map.put("id", id);  //章对应的id
+                            map.put("url", url);//详情页的url
+                            map.put("hint", hint);
+                            list.add(map);
+                        }
+
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                                myAdapter =new MyAdapter(MainActivity.this,list);
+                                recyclerView.setAdapter(myAdapter);
+
+
+
+                            }
+                        });
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
                 }
             });
             refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -131,7 +227,7 @@
                     try {
                         JSONObject jsonObject = new JSONObject(string);
                         dates= jsonObject.getInt("date");
-                        final int Date = dates+1;
+                         Date = dates+1;
                         final String date=String.valueOf(Date);
                         JSONArray jsonArray = jsonObject.getJSONArray("stories");
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -199,6 +295,8 @@
                         while ((line = reader.readLine()) != null) {
                             response.append(line);
                         }
+
+
                         showResponse(response.toString());
                             } catch (Exception e) {
                         e.printStackTrace();//这里记得要加上一个如果没联网的话显示的东西
