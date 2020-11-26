@@ -9,6 +9,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".TextActivity">
+
  <LinearLayout
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
@@ -71,33 +72,32 @@
                  android:background="@drawable/log_in" />
          </RelativeLayout>
      </LinearLayout>
-     <Button
+     <ImageView
          android:layout_width="match_parent"
          android:layout_height="300dp"
-         android:background="@drawable/main_picture"
-         android:layout_marginTop="5dp"/>
- </LinearLayout>
+         android:background="@drawable/main_picture"></ImageView>
+     <com.scwang.smartrefresh.layout.SmartRefreshLayout
+         android:id="@+id/refreshLayout"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         app:srlAccentColor="#000000"
+         app:srlEnablePreviewInEditMode="true"
+         app:srlPrimaryColor="#00000000">
 
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
-    android:id="@+id/refreshLayout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:srlAccentColor="#000000"
-    app:srlPrimaryColor="#00000000"
-    app:srlEnablePreviewInEditMode="true">
-    <com.scwang.smartrefresh.layout.header.ClassicsHeader
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-   <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:srlClassicsSpinnerStyle="Translate" />
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+     <com.scwang.smartrefresh.layout.header.ClassicsHeader
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" />
 
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/recyclerView"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content" />
+         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             app:srlClassicsSpinnerStyle="Translate" />
+     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
+    </LinearLayout>
 </LinearLayout>

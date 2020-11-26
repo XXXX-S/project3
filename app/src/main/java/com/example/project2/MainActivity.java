@@ -95,7 +95,6 @@
                             BufferedReader reader = null;
                             try {
                                 URL url2 = new URL("https://news-at.zhihu.com/api/3/news/before/" + data_str1);
-                                Log.d("sss",data_str1);
                                 connection = (HttpURLConnection) url2.openConnection();
                                 connection.setRequestMethod("GET");
                                 connection.setConnectTimeout(8000);
@@ -132,6 +131,8 @@
                     try {
                         JSONObject jsonObject = new JSONObject(string);
                         dates= jsonObject.getInt("date");
+                        final int Date = dates+1;
+                        final String date=String.valueOf(Date);
                         JSONArray jsonArray = jsonObject.getJSONArray("stories");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -141,7 +142,22 @@
                             final String id = jsonObject1.getString("id");
                             final String hint = jsonObject1.getString("hint");
                             final String url = jsonObject1.getString("url");
+                            final String year,month,day;
+                            if (i==0){
+                                year=date.substring(0,4);
+                                month=date.substring(4,6);
+                                day = date.substring(6,8);
+                            }
+                            else{
+                                year=null;
+                                month=null;
+                                day=null;
+                            }
                             Map<String, Object> map = new HashMap<>();
+                            map.put("year",year);
+                            map.put("month",month);
+                            map.put("day",day);
+                            map.put("i",i);
                             map.put("title", title); //标题
                             map.put("picture", images);  //高清大图图片
                             map.put("id", id);  //章对应的id
@@ -153,8 +169,7 @@
                             @Override
                             public void run() {
 
-                                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                                recyclerView.setAdapter(new MyAdapter(MainActivity.this, list));
+                                myAdapter.notifyDataSetChanged();
                             }
                         });
 
@@ -209,6 +224,7 @@
             try {
                 JSONObject jsonObject = new JSONObject(string);
                 dates= jsonObject.getInt("date");
+                final String date=String.valueOf(dates);
                 JSONArray jsonArray = jsonObject.getJSONArray("stories");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -218,7 +234,22 @@
                     final String id = jsonObject1.getString("id");
                     final String hint = jsonObject1.getString("hint");
                     final String url = jsonObject1.getString("url");
+                    final String year,month,day;
+                    if (i==0){
+                        year=date.substring(0,4);
+                        month=date.substring(4,6);
+                        day = date.substring(6,8);
+                    }
+                    else{
+                        year=null;
+                        month=null;
+                        day=null;
+                    }
                     Map<String, Object> map = new HashMap<>();
+                    map.put("year",year);
+                    map.put("month",month);
+                    map.put("day",day);
+                    map.put("i",i);
                     map.put("title", title); //标题
                     map.put("picture", images);  //高清大图图片
                     map.put("id", id);  //章对应的id
@@ -233,7 +264,8 @@
                     public void run() {
 
                         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                        recyclerView.setAdapter(new MyAdapter(MainActivity.this, list));
+                        myAdapter =new MyAdapter(MainActivity.this,list);
+                        recyclerView.setAdapter(myAdapter);
 
 
 

@@ -56,6 +56,13 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/button"/>
+                <TextView
+                    android:id="@+id/popularity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="点赞数"
+                    android:layout_toRightOf="@+id/like"
+                    android:textSize="15dp"/>
                 <Button
                     android:id="@+id/collect"
                     android:layout_alignParentRight="true"

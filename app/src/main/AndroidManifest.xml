@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".item2"></activity>
         <activity android:name=".LitemCommentActivity" />
         <activity android:name=".ItemCommentActivity" />
         <activity android:name=".CommentActivity" />
